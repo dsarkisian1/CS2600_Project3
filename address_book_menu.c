@@ -1,13 +1,12 @@
 #include <stdio.h>
-#include <stdio_ext.h>
+//#include <stdio_ext.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include "address_book_fops.h"
+//#include "abk_log.h"
+#include "address_book_menu.h"
 #include "address_book.h"
-#include "abk_fileops.h"
-#include "abk_log.h"
-#include "abk_menus.h"
-#include "abk.h"
 
 int get_option(int type, const char *msg)
 {
@@ -159,13 +158,15 @@ Status search_contact(AddressBook *address_book)
 	/* Add the functionality for search contacts here */
 	int option;
 	int result = e_no_match;
-	char target[NAME_LEN];
-	search_menu();
+
+
+
 	do
 	{
+		search_menu();
 		option = get_option(NUM,"Please select an option: ");
 		printf("\n");
-	} while (option >= 0 && option <= 4);
+	} while (option < 0 && option > 4);
 
 	switch(option)
 	{
@@ -175,6 +176,7 @@ Status search_contact(AddressBook *address_book)
 			break;
 		//Name
 		case e_second_opt:
+			char target[NAME_LEN];
 			printf("Enter the Name: ");
 			scanf("%s", &target);
 			printf("\n");
@@ -182,15 +184,17 @@ Status search_contact(AddressBook *address_book)
 			break;
 		//Phone
 		case e_third_opt:
+			char target[NAME_LEN];
 			printf("Enter the Phone Number: ");
 			scanf("%s", &target);
 			printf("\n");
 			break;
 		//Email
 		case e_fourth_opt:
+			char target[NAME_LEN];
 			printf("Enter the Email: ");
 			scanf("%s", &target);
-			printf("\n");	
+			printf("\n");
 			break;
 		//Serial No
 		case e_fifth_opt:
