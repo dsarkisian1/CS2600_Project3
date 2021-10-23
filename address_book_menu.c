@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-
+#include "address_book.h"
 #include "abk_fileops.h"
 #include "abk_log.h"
 #include "abk_menus.h"
@@ -23,6 +23,7 @@ int get_option(int type, const char *msg)
 
 Status save_prompt(AddressBook *address_book)
 {
+	int result = ;
 	char option;
 
 	do
@@ -54,6 +55,18 @@ Status list_contacts(AddressBook *address_book, const char *title, int *index, c
 	 */ 
 
 	return e_success;
+}
+
+void search_menu(void)
+{
+	printf("#######  Address Book  #######\n");
+	printf("#######  Search Contact By:\n");
+	printf("\n");
+	printf("0. Back\n");
+	printf("1. Name\n");
+	printf("2. Phone No\n");
+	printf("3. Email ID\n");
+	printf("4. Serial No\n");
 }
 
 void menu_header(const char *str)
@@ -144,6 +157,54 @@ Status search(const char *str, AddressBook *address_book, int loop_count, int fi
 Status search_contact(AddressBook *address_book)
 {
 	/* Add the functionality for search contacts here */
+	int option;
+	int result = e_no_match;
+	char target[NAME_LEN];
+	search_menu();
+	do
+	{
+		option = get_option(NUM,"Please select an option: ");
+		printf("\n");
+	} while (option >= 0 && option <= 4);
+
+	switch(option)
+	{
+		//Back
+		case e_first_opt:
+			result = e_back;
+			break;
+		//Name
+		case e_second_opt:
+			printf("Enter the Name: ");
+			scanf("%s", &target);
+			printf("\n");
+			
+			break;
+		//Phone
+		case e_third_opt:
+			printf("Enter the Phone Number: ");
+			scanf("%s", &target);
+			printf("\n");
+			break;
+		//Email
+		case e_fourth_opt:
+			printf("Enter the Email: ");
+			scanf("%s", &target);
+			printf("\n");	
+			break;
+		//Serial No
+		case e_fifth_opt:
+			int targetNum;
+			printf("Enter the Serial Number: ");
+			scanf("%d", &targetNum);
+			printf("\n");
+			break;
+	}
+
+	return result;
+
+
+
 }
 
 Status edit_contact(AddressBook *address_book)
