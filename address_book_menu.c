@@ -21,10 +21,10 @@ int get_option(int type, const char *msg)
 	switch(type)
 	{
 		case CHAR:
-			scanf("%s", &option);
+			scanf("%d", &option);
 			break;
 		case NUM:
-			scanf("%d", &option);
+			scanf("%d", &option); 
 			break;
 		case NONE:
 			break;
@@ -86,7 +86,7 @@ void menu_header(const char *str)
 {
 	fflush(stdout);
 
-	system("cls");
+	system("clear");
 
 	printf("#######  Address Book  #######\n");
 	if (*str != '\0')
@@ -132,7 +132,7 @@ Status menu(AddressBook *address_book)
 		switch (option)
 		{
 			case e_add_contact:
-				/* Add your implementation to call add_contacts function here */
+				add_contacts(address_book);
 				break;
 			case e_search_contact:
 				search_contact(address_book);
@@ -166,17 +166,22 @@ Status add_contacts(AddressBook *address_book)
         return e_fail;
     }
 
-    int count = address_book->count;
-    ++address_book->count;
+	ContactInfo contact;
+
+    //int count = address_book->count;
+    //++address_book->count;
     printf("Start inserting data:\n");                   //Insert new data
     printf("Please enter your name:");
-    scanf("%s", address_book->list[count].name);
+    scanf("%s", *contact.name);
     printf("Please enter the phone number:");
-    scanf("%s", address_book->list[count].phone_numbers);
+    scanf("%s", *contact.phone_numbers);
     printf("Please enter the address:");
-    scanf("%s", address_book->list[count].email_addresses);
+    scanf("%s", *contact.email_addresses);
     printf("Insert successfully!\n");
-    return e_fail;
+
+	contact.si_no = address_book->count + 1;
+
+    return e_success;
 }
 
 void print_search_header()
@@ -291,26 +296,26 @@ Status search_contact(AddressBook *address_book)
 		//Name
 		case e_second_opt:
 			printf("Enter the Name: ");
-			scanf("%s", &target);
+			scanf("%s", target);
 			printf("\n");
 			// result = search();
 			break;
 		//Phone
 		case e_third_opt:
 			printf("Enter the Phone Number: ");
-			scanf("%s", &target);
+			scanf("%s", target);
 			printf("\n");
 			break;
 		//Email
 		case e_fourth_opt:
 			printf("Enter the Email: ");
-			scanf("%s", &target);
+			scanf("%s", target);
 			printf("\n");
 			break;
 		//Serial No
 		case e_fifth_opt:
 			printf("Enter the Serial Number: ");
-			scanf("%d", &targetNum);
+			//scanf("%d", targetNum);
 			printf("\n");
 			break;
 	}
@@ -321,12 +326,13 @@ Status search_contact(AddressBook *address_book)
 Status edit_contact(AddressBook *address_book)
 {
 	/* Add the functionality for edit contacts here */
+	return e_fail;
 }
 
 Status delete_contact(AddressBook *address_book)
 {
 	int option;
-	const AddressBook *endPtr = address_book + address_book->count;
+	AddressBook *endPtr = address_book + address_book->count;
 	char name[NAME_LEN];
 	char phone_number[NUMBER_LEN];
 	char email[EMAIL_ID_LEN];
@@ -346,16 +352,16 @@ Status delete_contact(AddressBook *address_book)
 		{
 			case e_second_opt:
 				printf("Enter the Name: ");
-				scanf("%s", &name);
+				scanf("%s", name);
 				search_and_delete(address_book, NAME, name, endPtr);
 				break;
 			case e_third_opt:
 				printf("Enter the Phone No: ");
-				scanf("%s", &phone_number);
+				scanf("%s", phone_number);
 				break;
 			case e_fourth_opt:
 				printf("Enter the email ID: ");
-				scanf("%s", &email);
+				scanf("%s", email);
 				break;
 			case e_fifth_opt:
 				get_option(NUM, "Enter the Serial No: ");
@@ -365,7 +371,7 @@ Status delete_contact(AddressBook *address_book)
 		}
 	} while(option != e_exit);
 	
-
+	return e_success;
 	/* Add the functionality for delete contacts here */
 }
 
@@ -417,4 +423,7 @@ Status search_and_delete(AddressBook *address_book, DeleteType type, char *targe
 			}
 		}
 	}
+
+	return e_success;
+
 }
