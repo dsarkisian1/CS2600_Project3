@@ -199,7 +199,7 @@ Status exit_search()
 		printf("Press: [q] | Cancel: ");
 		scanf("%c", &input);
 		printf("\n");
-	} while (input != 'q');
+	} while (input != 'q' || input != 'Q');
 	return e_back;
 }
 
@@ -253,11 +253,23 @@ void print_contact(ContactInfo *contact)
 
 }
 
-Status search(const char *str, AddressBook *address_book, int field)
+Status search(AddressBook *address_book, const char *targetName, int targetNo, int data_type)
 {
 	int result = e_no_match;
+	int count = 0;
 	menu_header("Search Result:\n");
-
+	print_search_header();
+	if (data_type == NAME){
+		for(;address_book->list < (address_book->list)+(address_book->count); address_book->list++){
+			if (strcmp(address_book->list->name[0],targetName) == 0)
+			{
+				print_contact(address_book->list);
+				print_search_separator();
+			}
+		}
+	}
+	exit_search();
+	
 	return result;
 }
 
@@ -268,6 +280,12 @@ Status search_contact(AddressBook *address_book)
 	int result = e_no_match;
 	char target[NAME_LEN];
 	int targetNum;
+
+	if (address_book == NULL)            
+    {
+        printf("Address_book is null\n");
+        return e_fail;
+    }
 
 	if (address_book->count == 0)
 	{
@@ -291,20 +309,20 @@ Status search_contact(AddressBook *address_book)
 		//Name
 		case e_second_opt:
 			printf("Enter the Name: ");
-			scanf("%s", &target);
+			scanf("%s", target);
 			printf("\n");
-			// result = search();
+			result = search(address_book, target, 0, NAME);
 			break;
 		//Phone
 		case e_third_opt:
 			printf("Enter the Phone Number: ");
-			scanf("%s", &target);
+			scanf("%s", target);
 			printf("\n");
 			break;
 		//Email
 		case e_fourth_opt:
 			printf("Enter the Email: ");
-			scanf("%s", &target);
+			scanf("%s", target);
 			printf("\n");
 			break;
 		//Serial No
