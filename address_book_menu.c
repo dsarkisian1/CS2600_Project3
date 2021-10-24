@@ -22,7 +22,6 @@ int get_option(int type, const char *msg)
 
 Status save_prompt(AddressBook *address_book)
 {
-	int result = ;
 	char option;
 
 	do
@@ -214,10 +213,10 @@ Status search(const char *str, AddressBook *address_book, int loop_count, int fi
 	/* Add the functionality for adding contacts here */
 	int result = e_no_match;
 	char input;
-	// if (mode == e_search)
-	// {
-	// 	if (address_book->list)
-	// }
+	do
+	{
+
+	} while (input != "q");
 
 	return result;
 }
@@ -279,9 +278,6 @@ Status search_contact(AddressBook *address_book)
 	}
 
 	return result;
-
-
-
 }
 
 Status edit_contact(AddressBook *address_book)
