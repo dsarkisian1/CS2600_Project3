@@ -80,7 +80,7 @@ Status list_contacts(AddressBook *address_book, const char *title, int *index, c
 	char inp = '\0';
 	int ind = *index;
 	int check = -1;
-	AdressBook base = address_book;
+	AddressBook base = address_book;
 	switch(mode)
 	{
 		case e_list:
@@ -130,7 +130,7 @@ Status list_contacts(AddressBook *address_book, const char *title, int *index, c
 						check = 1;
 					}
 			
-					if ((inp == 'n' && address_book >= &list[address_book->count]) || (inp == 'p' && address_book <= base))
+					if ((inp == 'n' && address_book >= list[address_book->count]) || (inp == 'p' && address_book <= base))
 					{
 						printf("\nInvalid input. Out of bounds.\nEnter Input: ");
 						check = 0;
@@ -211,7 +211,7 @@ Status menu(AddressBook *address_book)
 				break;
 			case e_list_contacts:
 				break;
-				list_contacts(address_book, "List Contacts: ", 1, "Press:\n[q] | Cancel\n[n] | Next Page\n[p] | Previous Page", e_list)
+				list_contacts(address_book, "List Contacts: ", 1, "Press:\n[q] | Cancel\n[n] | Next Page\n[p] | Previous Page", e_list);
 			case e_save:
 				save_file(address_book);
 				break;
