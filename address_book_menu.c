@@ -58,8 +58,7 @@ Status list_contacts(AddressBook *address_book, const char *title, int *index, c
 
 void search_menu(void)
 {
-	printf("#######  Address Book  #######\n");
-	printf("#######  Search Contact By:\n");
+	menuheader("Search Contact By:\n");
 	printf("\n");
 	printf("0. Back\n");
 	printf("1. Name\n");
@@ -148,9 +147,79 @@ Status add_contacts(AddressBook *address_book)
 	/* Add the functionality for adding contacts here */
 }
 
+void print_search_header()
+{
+	printf("==============================================================================================================\n");
+	printf(": S.No : Name                             : Phone No                         : Email ID                      :\n");
+	printf("==============================================================================================================\n");
+}
+
+void print_search_separator()
+{
+	printf("==============================================================================================================\n");
+}
+
+void print_contact(ContactInfo *contact)
+{
+	bool_t si_no_printed = 0;
+	
+	for (int i = 0; i < 5; i++)
+	{
+		//Print serial no
+		if (i == 0)
+		{
+			printf(": %d    : ", contact->si_no);
+		}
+		else
+		{
+			printf(":      : ");
+		}
+
+		//Print name
+		if (i > 0)
+		{
+			printf("%s",contact->name[i]);
+			for (int k = 0; k < 32-strlen(contact->name[i]); k++)
+			{
+				printf(" ");
+			}
+		}
+		else
+		{
+			printf("                                ");
+		}
+		printf(" : ");
+
+		//Print Phone
+		printf("%s",contact->phone_numbers[i]);
+		for (int k = 0; k < 32-strlen(contact->phone_numbers[i]); k++)
+		{
+			printf(" ");
+		}
+		printf(" : ");
+
+		//Print Email
+		printf("%s", contact->email_addresses[i]);
+		for (int k = 0; k < 32-strlen(contact->email_addresses[i]); k++)
+		{
+			printf(" ");
+		}
+		printf(" :\n");
+	}
+
+}
+
 Status search(const char *str, AddressBook *address_book, int loop_count, int field, const char *msg, Modes mode)
 {
 	/* Add the functionality for adding contacts here */
+	int result = e_no_match;
+	char input;
+	// if (mode == e_search)
+	// {
+	// 	if (address_book->list)
+	// }
+
+	return result;
 }
 
 Status search_contact(AddressBook *address_book)
@@ -159,7 +228,11 @@ Status search_contact(AddressBook *address_book)
 	int option;
 	int result = e_no_match;
 
-
+	if (address_book->count == 0)
+	{
+		printf("There are no contacts in the address book.");
+		return e_back;
+	}
 
 	do
 	{
