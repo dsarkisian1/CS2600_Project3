@@ -158,6 +158,18 @@ void print_search_separator()
 	printf("==============================================================================================================\n");
 }
 
+Status exit_search()
+{
+	char input;
+	do
+	{
+		printf("Press: [q] | Cancel: ");
+		scanf("%c", &input);
+		printf("\n");
+	} while (input != "q");
+	return e_back;
+}
+
 void print_contact(ContactInfo *contact)
 {
 	bool_t si_no_printed = 0;
@@ -175,7 +187,7 @@ void print_contact(ContactInfo *contact)
 		}
 
 		//Print name
-		if (i > 0)
+		if (i == 0)
 		{
 			printf("%s",contact->name[i]);
 			for (int k = 0; k < 32-strlen(contact->name[i]); k++)
@@ -208,15 +220,10 @@ void print_contact(ContactInfo *contact)
 
 }
 
-Status search(const char *str, AddressBook *address_book, int loop_count, int field, const char *msg, Modes mode)
+Status search(const char *str, AddressBook *address_book, int field)
 {
-	/* Add the functionality for adding contacts here */
 	int result = e_no_match;
-	char input;
-	do
-	{
-
-	} while (input != "q");
+	menu_header("Search Result:\n");
 
 	return result;
 }
@@ -252,7 +259,7 @@ Status search_contact(AddressBook *address_book)
 			printf("Enter the Name: ");
 			scanf("%s", &target);
 			printf("\n");
-			
+			// result = search();
 			break;
 		//Phone
 		case e_third_opt:
