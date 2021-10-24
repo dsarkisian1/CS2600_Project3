@@ -70,6 +70,13 @@ typedef struct
 	int si_no;
 } ContactInfo;
 
+typedef enum
+{
+	NAME, 
+	PHONE, 
+	EMAIL
+} DeleteType;
+
 typedef struct
 {
 	FILE *fp;
