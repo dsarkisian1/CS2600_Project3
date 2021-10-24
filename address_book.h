@@ -74,7 +74,8 @@ typedef enum
 {
 	NAME, 
 	PHONE, 
-	EMAIL
+	EMAIL,
+	SERIAL_NO
 } DeleteType;
 
 typedef struct
