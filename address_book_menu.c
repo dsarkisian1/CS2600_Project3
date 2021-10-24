@@ -73,7 +73,7 @@ Status list_contacts(AddressBook *address_book, const char *title, int *index, c
 
 void search_menu(void)
 {
-	menuheader("Search Contact By:\n");
+	menu_header("Search Contact By:\n");
 	printf("\n");
 	printf("0. Back\n");
 	printf("1. Name\n");
@@ -160,10 +160,10 @@ Status menu(AddressBook *address_book)
 Status add_contacts(AddressBook *address_book)
 {
 	/* Add the functionality for adding contacts here */
-	   if (address_book == NULL)            //Sentence blank
+	if (address_book == NULL)            //Sentence blank
     {
         printf("address_book is null\n");
-        return;
+        return e_fail;
     }
 
     int count = address_book->count;
@@ -176,7 +176,7 @@ Status add_contacts(AddressBook *address_book)
     printf("Please enter the address:");
     scanf("%s", address_book->list[count].email_addresses);
     printf("Insert successfully!\n");
-    return;
+    return e_fail;
 }
 
 void print_search_header()
@@ -199,7 +199,7 @@ Status exit_search()
 		printf("Press: [q] | Cancel: ");
 		scanf("%c", &input);
 		printf("\n");
-	} while (input != "q");
+	} while (input != 'q');
 	return e_back;
 }
 
@@ -266,6 +266,8 @@ Status search_contact(AddressBook *address_book)
 	/* Add the functionality for search contacts here */
 	int option;
 	int result = e_no_match;
+	char target[NAME_LEN];
+	int targetNum;
 
 	if (address_book->count == 0)
 	{
@@ -288,7 +290,6 @@ Status search_contact(AddressBook *address_book)
 			break;
 		//Name
 		case e_second_opt:
-			char target[NAME_LEN];
 			printf("Enter the Name: ");
 			scanf("%s", &target);
 			printf("\n");
@@ -296,21 +297,18 @@ Status search_contact(AddressBook *address_book)
 			break;
 		//Phone
 		case e_third_opt:
-			char target[NAME_LEN];
 			printf("Enter the Phone Number: ");
 			scanf("%s", &target);
 			printf("\n");
 			break;
 		//Email
 		case e_fourth_opt:
-			char target[NAME_LEN];
 			printf("Enter the Email: ");
 			scanf("%s", &target);
 			printf("\n");
 			break;
 		//Serial No
 		case e_fifth_opt:
-			int targetNum;
 			printf("Enter the Serial Number: ");
 			scanf("%d", &targetNum);
 			printf("\n");
