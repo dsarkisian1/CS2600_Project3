@@ -190,10 +190,10 @@ Status add_contacts(AddressBook *address_book)
 	//}
     printf("Insert successfully!\n");
 
-	count++;					//increment count
+	// count++;					//increment count
 	contact.si_no = count;
-	address_book->count = count;		
 	address_book -> list[count] = contact; 
+	address_book->count++;
  
     return e_success;
 }
@@ -370,7 +370,7 @@ Status delete_contact(AddressBook *address_book)
 	char email[EMAIL_ID_LEN];
 	do 
 	{
-		menu_header("Search Contact to Delete By:");
+		menu_header("Search Contact to Delete By:\n");
 		printf("Contact's Name: %s", address_book->list[0].name);
 		printf("0. Back\n");
 		printf("1. Name\n");
