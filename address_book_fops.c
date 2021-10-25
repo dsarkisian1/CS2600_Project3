@@ -77,15 +77,15 @@ Status save_file(AddressBook *address_book)
 	fprintf(address_book->fp, "%i\n", address_book->count);
 	
 	for(int ind = 0; ind < address_book->count; ind++)
-		{
-			fprintf(address_book->fp, "%i,", ind);
-			fprintf(address_book->fp, "%s,", address_book->list[ind].name[0]);
-			for(int j = 0; j < 5; j++)
-				fprintf(address_book->fp, "%s,", address_book->list[ind].phone_numbers[j]);
-			for(int k = 0; k < 5; k++)
-				fprintf(address_book->fp, "%s,", address_book->list[ind].email_addresses[k]);
-			fprintf(address_book->fp, "\n");
-		}
+	{
+		fprintf(address_book->fp, "%i,", ind);
+		fprintf(address_book->fp, "%s,", address_book->list[ind].name[0]);
+		for(int j = 0; j < 5; j++)
+			fprintf(address_book->fp, "%s,", address_book->list[ind].phone_numbers[j]);
+		for(int k = 0; k < 5; k++)
+			fprintf(address_book->fp, "%s,", address_book->list[ind].email_addresses[k]);
+		fprintf(address_book->fp, "\n");
+	}
 
 	fclose(address_book->fp);
 
