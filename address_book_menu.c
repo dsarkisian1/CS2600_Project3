@@ -21,7 +21,7 @@ int get_option(int type, const char *msg)
 	switch(type)
 	{
 		case CHAR:
-			scanf("%d", &option);
+			//scanf("%s", &option);
 			break;
 		case NUM:
 			scanf("%d", &option); 
@@ -86,7 +86,7 @@ void menu_header(const char *str)
 {
 	fflush(stdout);
 
-	system("clear");
+	//system("clear");
 
 	printf("#######  Address Book  #######\n");
 	if (*str != '\0')
@@ -168,19 +168,33 @@ Status add_contacts(AddressBook *address_book)
 
 	ContactInfo contact;
 
-    //int count = address_book->count;
-    //++address_book->count;
+	int numberOfPhones = 0; 
+	int numberOfEmails = 0;
+
+	int count = address_book->count;
+
     printf("Start inserting data:\n");                   //Insert new data
     printf("Please enter your name:");
     scanf("%s", *contact.name);
-    printf("Please enter the phone number:");
-    scanf("%s", *contact.phone_numbers);
-    printf("Please enter the address:");
-    scanf("%s", *contact.email_addresses);
+	//printf("Please enter amount of phone numbers: ");
+	//scanf("%d", &numberOfPhones);
+	//for(int i = 0; i < numberOfPhones; i++){
+		printf("Please enter the phone number: ");
+    	scanf("%s", *contact.phone_numbers);
+	//}
+    //printf("Please enter amount of email addresses: ");
+	//scanf("%d", &numberOfEmails);
+	//for(int i = 0; i < numberOfPhones; i++){
+		printf("Please enter the address:");
+    	scanf("%s", *contact.email_addresses);
+	//}
     printf("Insert successfully!\n");
 
-	contact.si_no = address_book->count + 1;
-
+	count++;					//increment count
+	contact.si_no = count;
+	address_book->count = count;		
+	address_book -> list[count] = contact; 
+ 
     return e_success;
 }
 
