@@ -21,7 +21,7 @@ int get_option(int type, const char *msg)
 	switch(type)
 	{
 		case CHAR:
-			//scanf("%c", &option);
+			scanf("%c", &option);
 			break;
 		case NUM:
 			scanf("%d", &option); 
@@ -613,6 +613,7 @@ Status search_and_delete(AddressBook *address_book, DeleteType type, char *targe
 					contacts_count += 1;
 				}
 			}
+			search(address_book, target, 0, NAME);
 			break;
 		case PHONE:
 			for(int counter = 0; counter < address_book->count; counter++)
@@ -626,6 +627,7 @@ Status search_and_delete(AddressBook *address_book, DeleteType type, char *targe
 					}	
 				}
 			}
+			search(address_book, target, 0, PHONE);
 			break;
 		case EMAIL:
 			for(int counter = 0; counter < address_book->count; counter++)
@@ -640,6 +642,7 @@ Status search_and_delete(AddressBook *address_book, DeleteType type, char *targe
 				}
 				
 			}
+			search(address_book, target, 0, EMAIL);
 			break;
 		default:
 			break;
@@ -647,18 +650,19 @@ Status search_and_delete(AddressBook *address_book, DeleteType type, char *targe
 
 	if(contacts_count > 0)
 	{
+		option = get_option(NUM, "Enter a Serial Number (S No.) to Delete: ");
 		for(int count = 0; count < contacts_count; count++)
 		{
-			search(address_book, "\0", contacts[count], SERIAL_NO);
-			option = get_option(NUM, "Enter a Serial Number (S No.) to Delete: ");
 			for(int counter = 0; counter < address_book->count; counter++)
 			{
+
 				if(option == address_book->list[counter].si_no)
 				{
-					ContactInfo temp = address_book->list[address_book->count];
+					ContactInfo temp = address_book->list[address_book->count - 1];
 					address_book->list[address_book->count - 1] = address_book->list[counter];
 					address_book->list[counter] = temp;
 					address_book->count--;
+					printf("Deletion successful");
 					break;
 				}
 			}
