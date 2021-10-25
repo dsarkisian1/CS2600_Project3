@@ -93,7 +93,7 @@ Status list_contacts(AddressBook *address_book, const char *title, int *index, c
 	 * The menu provide navigation option if the entries increase the page size
 	 */ 
 	char inp = '\0';
-  	int ind = 1;
+  	int ind = 0;
   	int check = -1;
 	char* target = "\0";
 
