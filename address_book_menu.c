@@ -390,6 +390,8 @@ Status search(AddressBook *address_book, const char *targetName, int targetNo, i
 	int result = e_no_match;
 	menu_header("Search Result:\n");
 	print_search_header();
+
+	//Search for Name
 	if (data_type == NAME){
 		for (int i = 0; i < address_book->count; i++)
 		{
@@ -397,10 +399,12 @@ Status search(AddressBook *address_book, const char *targetName, int targetNo, i
 			{
 				print_contact(&(address_book->list[i]));
 				print_search_separator();
+				result = e_success;
 			}
 		}
 	}
 
+	//Search for phone
 	if (data_type == PHONE){
 		for (int i = 0; i < address_book->count; i++)
 		{
@@ -411,11 +415,13 @@ Status search(AddressBook *address_book, const char *targetName, int targetNo, i
 					print_contact(&(address_book->list[i]));
 					print_search_separator();
 					k = 5;
+					result = e_success;
 				}
 			}
 		}
 	}
 
+	//Search for email
 	if (data_type == EMAIL){
 		for (int i = 0; i < address_book->count; i++)
 		{
@@ -426,11 +432,14 @@ Status search(AddressBook *address_book, const char *targetName, int targetNo, i
 					print_contact(&(address_book->list[i]));
 					print_search_separator();
 					k = 5;
+					result = e_success;
 				}
 			}
 		}
 	}
 
+
+	//Search for serial
 	if (data_type == SERIAL_NO)
 	{
 		for (int i = 0; i < address_book->count; i++)
@@ -439,8 +448,15 @@ Status search(AddressBook *address_book, const char *targetName, int targetNo, i
 			{
 				print_contact(&(address_book->list[i]));
 				print_search_separator();
+				result = e_success;
 			}
 		}
+	}
+
+	//No matches found
+	if (result == e_no_match)
+	{
+		printf("No results found.\n");
 	}
 	
 	return result;
