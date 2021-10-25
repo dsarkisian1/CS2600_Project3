@@ -84,9 +84,9 @@ void search_menu(void)
 
 void menu_header(const char *str)
 {
-/* 	fflush(stdout);
+	fflush(stdout);
 
-	system("cls"); */
+	system("cls");
 
 	printf("#######  Address Book  #######\n");
 	if (*str != '\0')
@@ -119,7 +119,6 @@ Status menu(AddressBook *address_book)
 	do
 	{
 		main_menu();
-		printf("%d", address_book->count);
 
 		option = get_option(NUM, "");
 
@@ -501,30 +500,46 @@ Status delete_contact(AddressBook *address_book){
 Status search_and_delete(AddressBook *address_book, DeleteType type, char *target, AddressBook *endPtr)
 {
 	int contacts[address_book->count];
+	int option;
 	int contacts_count = 0;
 	switch(type)
 	{
 		case NAME:
-			for(AddressBook *startPoint = address_book; startPoint < endPtr; startPoint++)
+			for(int counter = 0; counter < address_book->count; counter++)
 			{
-				if(strcmp(*address_book->list->name, target) == 0)
+				if(strcmp(address_book->list[counter].name[0], target) == 0)
 				{
-					contacts[contacts_count] = address_book->list->si_no;
+					contacts[contacts_count] = address_book->list[counter].si_no;
 					contacts_count += 1;
 				}
 			}
 			break;
 		case PHONE:
-			for(AddressBook *startPoint = address_book; startPoint < endPtr; startPoint++)
+			for(int counter = 0; counter < address_book->count; counter++)
 			{
-				if(strcmp(*address_book->list->name, target) == 0)
+				for(int counter2 = 0; counter2 < PHONE_NUMBER_COUNT; counter2++)
 				{
-					contacts[contacts_count] = address_book->list->si_no;
-					contacts_count += 1;
+					if(strcmp(address_book->list[counter].name[counter2], target) == 0)
+					{
+						contacts[contacts_count] = address_book->list[counter].si_no;
+						contacts_count += 1;
+					}	
 				}
 			}
 			break;
 		case EMAIL:
+			for(int counter = 0; counter < address_book->count; counter++)
+			{
+				for(int counter2 = 0; counter2 < EMAIL_ID_LEN; counter2++)
+				{
+					if(strcmp(address_book->list[counter].email_addresses[counter2], target) == 0)
+					{
+						contacts[contacts_count] = address_book->list[counter].si_no;
+						contacts_count += 1;
+					}	
+				}
+				
+			}
 			break;
 		default:
 			break;
@@ -534,14 +549,17 @@ Status search_and_delete(AddressBook *address_book, DeleteType type, char *targe
 	{
 		for(int count = 0; count < contacts_count; count++)
 		{
-			for(AddressBook *startPoint = address_book; startPoint < endPtr; startPoint++)
+			search(address_book, "\0", contacts[count], SERIAL_NO);
+			option = get_option(NUM, "Enter a Serial Number (S No.) to Delete: ");
+			for(int counter = 0; counter < address_book->count; counter++)
 			{
-				if(startPoint->list->si_no == contacts[count])
+				if(option == address_book->list[counter].si_no)
 				{
-					menu_header("Search Result: ");
-					printf("============================================================================================================/n");
-					printf(": S. No : Name                            : Phone No                        : Email ID                     :/n");
-					printf("============================================================================================================/n");
+					ContactInfo temp = address_book->list[address_book->count];
+					address_book->list[address_book->count - 1] = address_book->list[counter];
+					address_book->list[counter] = temp;
+					address_book->count--;
+					break;
 				}
 			}
 		}

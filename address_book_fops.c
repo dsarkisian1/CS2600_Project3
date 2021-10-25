@@ -11,10 +11,9 @@
 Status load_file(AddressBook *address_book)
 {
 	int ret;
-	printf("Works First");
 	char firstCharacter;
 	address_book->count = 0;
-    address_book->list = malloc(sizeof(ContactInfo)*100);
+    address_book->list = malloc(sizeof(ContactInfo)*50);
 
 	/* 
 	 * Check for file existance
@@ -23,17 +22,20 @@ Status load_file(AddressBook *address_book)
 
 	if (address_book->fp == NULL)
 	{
-		printf("Doesnt Works");
 		/* Create a file for adding entries */
 		address_book->fp = fopen(DEFAULT_FILE, "w");
 		address_book->count = 0;
 	} else
 	{
 		fscanf(address_book->fp, "%d", &address_book->count);
+		firstCharacter = getc(address_book->fp);
+
 		for(int counter = 0; counter < address_book->count; counter++)
 		{
+			printf("%d", counter);
 			fscanf(address_book->fp, "%d,%32[^,],%32[^,],%32[^,],%32[^,],%32[^,],%32[^,],%32[^,],%32[^,],%32[^,],%32[^,],%32[^,]",
 			&address_book->list[counter].si_no,
+			address_book->list[counter].name[0],
 			address_book->list[counter].phone_numbers[0],
 			address_book->list[counter].phone_numbers[1], 
 			address_book->list[counter].phone_numbers[2], 
@@ -44,6 +46,14 @@ Status load_file(AddressBook *address_book)
 			address_book->list[counter].email_addresses[2],
 			address_book->list[counter].email_addresses[3], 
 			address_book->list[counter].email_addresses[4]);
+
+			for (firstCharacter = getc(address_book->fp); firstCharacter != EOF; firstCharacter = getc(address_book->fp))
+			{
+				if (firstCharacter == '\n') 
+				{
+					break;
+				}	
+			}
 		}
 		fclose(address_book->fp);
 	}
