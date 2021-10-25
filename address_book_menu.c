@@ -167,6 +167,7 @@ Status add_contacts(AddressBook *address_book)
     }
 
 	ContactInfo contact;
+	ContactInfo *p = &contact;
 
 	int numberOfPhones = 0; 
 	int numberOfEmails = 0;
@@ -184,7 +185,7 @@ Status add_contacts(AddressBook *address_book)
     		scanf("%s", contact.phone_numbers[i]);	
 		}
 		else{
-			contact.phone_numbers[i][0] = '0';
+			strcpy(contact.phone_numbers[i],"\0");
 		}
 		
 	}
@@ -196,7 +197,7 @@ Status add_contacts(AddressBook *address_book)
     		scanf("%s", contact.email_addresses[i]);	
 		}
 		else{
-			contact.email_addresses[i][0] = '0';
+			strcpy(contact.email_addresses[i],"\0");
 		}
 		
 	}
@@ -212,26 +213,26 @@ Status add_contacts(AddressBook *address_book)
 
 void print_search_header()
 {
-	printf("==============================================================================================================\n");
-	printf(": S.No : Name                             : Phone No                         : Email ID                      :\n");
-	printf("==============================================================================================================\n");
+	printf("================================================================================================================\n");
+	printf(": S.No : Name                             : Phone No                         : Email ID                        :\n");
+	printf("================================================================================================================\n");
 }
 
 void print_search_separator()
 {
-	printf("==============================================================================================================\n");
+	printf("================================================================================================================\n");
 }
 
-Status exit_search()
+void exit_search()
 {
-	char input;
-	while (input != 'q' || input != 'Q');
+	char input = 'x';
+	do
 	{
 		printf("Press: [q] | Cancel: ");
 		scanf("%c", &input);
 		printf("\n");
-	} 
-	return e_back;
+		printf("text %c",input);
+	} while (input != 'q' || input != 'Q');
 }
 
 void print_contact(ContactInfo *contact)
@@ -263,46 +264,21 @@ void print_contact(ContactInfo *contact)
 		}
 		printf(" : ");
 
-		//Print Phone
-		if (strcmp(contact->phone_numbers[i],"0") == 0)
+		//Print phone
+		printf("%s", contact->phone_numbers[i]);
+		for (int k = 0; k < 32-strlen(contact->phone_numbers[i]); k++)
 		{
-			printf("                               ");
-		}
-		else
-		{
-			printf("%s", contact->phone_numbers[i]);
-			for (int k = 2; k < 32-strlen(contact->phone_numbers[i]); k++)
-			{
-				printf(" ");
-			}
+			printf(" ");
 		}
 		
-		// printf("%s",contact->phone_numbers[i]);
-		// for (int k = 0; k < 32-strlen(contact->phone_numbers[i]); k++)
-		// {
-		// 	printf(" ");
-		// }
-		// printf(" : ");
+		printf(" : ");
 
 		//Print Email
-		// printf("%s",contact->email_addresses[i]);
-		// for (int k = 2; k < 32-strlen(contact->email_addresses[i]); k++)
-		// {
-		// 	printf(" ");
-		// }
-		if (strcmp(contact->email_addresses[i],"0") == 0)
+		printf("%s", contact->email_addresses[i]);
+		for (int k = 0; k < 32-strlen(contact->email_addresses[i]); k++)
 		{
-			printf("                               ");
+			printf(" ");
 		}
-		else
-		{
-			printf("%s", contact->email_addresses[i]);
-			for (int k = 0; k < 32-strlen(contact->email_addresses[i]); k++)
-			{
-				printf(" ");
-			}
-		}
-		
 		printf(":\n");
 	}
 }
@@ -313,12 +289,54 @@ Status search(AddressBook *address_book, const char *targetName, int targetNo, i
 	menu_header("Search Result:\n");
 	print_search_header();
 	if (data_type == NAME){
-		for(int i = 0; i < address_book->count; i++){
+		for (int i = 0; i < address_book->count; i++)
+		{
 			if (strcmp(address_book->list[i].name[0],targetName) == 0)
 			{
 				print_contact(&(address_book->list[i]));
 				print_search_separator();
-				scanf("%d", result);
+			}
+		}
+	}
+
+	if (data_type == PHONE){
+		for (int i = 0; i < address_book->count; i++)
+		{
+			for (int k = 0; k < 5; k++)
+			{
+				if (strcmp(address_book->list[i].phone_numbers[k],targetName) == 0)
+				{
+					print_contact(&(address_book->list[i]));
+					print_search_separator();
+					k = 5;
+				}
+			}
+		}
+	}
+
+	if (data_type == EMAIL){
+		for (int i = 0; i < address_book->count; i++)
+		{
+			for (int k = 0; k < 5; k++)
+			{
+				if (strcmp(address_book->list[i].email_addresses[k],targetName) == 0)
+				{
+					print_contact(&(address_book->list[i]));
+					print_search_separator();
+					k = 5;
+				}
+			}
+		}
+	}
+
+	if (data_type == SERIAL_NO)
+	{
+		for (int i = 0; i < address_book->count; i++)
+		{
+			if (address_book->list[i].si_no == targetNo)
+			{
+				print_contact(&(address_book->list[i]));
+				print_search_separator();
 			}
 		}
 	}
@@ -367,24 +385,31 @@ Status search_contact(AddressBook *address_book)
 			scanf("%s", target);
 			printf("\n");
 			result = search(address_book, target, 0, NAME);
+			exit_search();
 			break;
 		//Phone
 		case e_third_opt:
 			printf("Enter the Phone Number: ");
 			scanf("%s", target);
 			printf("\n");
+			result = search(address_book, target, 0, PHONE);
+			exit_search();
 			break;
 		//Email
 		case e_fourth_opt:
 			printf("Enter the Email: ");
 			scanf("%s", target);
 			printf("\n");
+			result = search(address_book, target, 0, EMAIL);
+			exit_search();
 			break;
 		//Serial No
 		case e_fifth_opt:
 			printf("Enter the Serial Number: ");
-			//scanf("%d", targetNum);
+			scanf("%d", &targetNum);
 			printf("\n");
+			result = search(address_book, "\0", targetNum, SERIAL_NO);
+			exit_search();
 			break;
 	}
 
