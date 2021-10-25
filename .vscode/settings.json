@@ -2,6 +2,7 @@
     "files.associations": {
         "address_book_fops.h": "c",
         "stdlib.h": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "address_book.h": "c"
     }
 }
