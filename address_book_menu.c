@@ -224,8 +224,6 @@ Status exit_search()
 
 void print_contact(ContactInfo *contact)
 {
-	bool_t si_no_printed = 0;
-	
 	for (int i = 0; i < 5; i++)
 	{
 		//Print serial no
@@ -254,34 +252,61 @@ void print_contact(ContactInfo *contact)
 		printf(" : ");
 
 		//Print Phone
-		printf("%s",contact->phone_numbers[i]);
-		for (int k = 0; k < 32-strlen(contact->phone_numbers[i]); k++)
+		if (strcmp(contact->phone_numbers[i],"0") == 0)
 		{
-			printf(" ");
+			printf("                               ");
 		}
-		printf(" : ");
+		else
+		{
+			printf("%s", contact->phone_numbers[i]);
+			for (int k = 2; k < 32-strlen(contact->phone_numbers[i]); k++)
+			{
+				printf(" ");
+			}
+		}
+		
+		// printf("%s",contact->phone_numbers[i]);
+		// for (int k = 0; k < 32-strlen(contact->phone_numbers[i]); k++)
+		// {
+		// 	printf(" ");
+		// }
+		// printf(" : ");
 
 		//Print Email
-		printf("%s", contact->email_addresses[i]);
-		for (int k = 0; k < 32-strlen(contact->email_addresses[i]); k++)
+		// printf("%s",contact->email_addresses[i]);
+		// for (int k = 2; k < 32-strlen(contact->email_addresses[i]); k++)
+		// {
+		// 	printf(" ");
+		// }
+		if (strcmp(contact->email_addresses[i],"0") == 0)
 		{
-			printf(" ");
+			printf("                               ");
 		}
-		printf(" :\n");
+		else
+		{
+			printf("%s", contact->email_addresses[i]);
+			for (int k = 0; k < 32-strlen(contact->email_addresses[i]); k++)
+			{
+				printf(" ");
+			}
+		}
+		
+		printf(":\n");
 	}
-
 }
 
 Status search(AddressBook *address_book, const char *targetName, int targetNo, int data_type)
 {
 	int result = e_no_match;
 	menu_header("Search Result:\n");
-	// print_search_header();
+	print_search_header();
 	if (data_type == NAME){
 		for(int i = 0; i < address_book->count; i++){
 			if (strcmp(address_book->list[i].name[0],targetName) == 0)
 			{
-				printf("Found\n");
+				print_contact(&(address_book->list[i]));
+				print_search_separator();
+				scanf("%d", result);
 			}
 		}
 	}
@@ -313,7 +338,8 @@ Status search_contact(AddressBook *address_book)
 	do
 	{
 		search_menu();
-		option = get_option(NUM,"Please select an option: ");
+		printf("Please select an option: ");
+		scanf("%d",&option);
 		printf("\n");
 	} while (option < 0 && option > 4);
 
