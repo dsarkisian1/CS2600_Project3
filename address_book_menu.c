@@ -261,17 +261,14 @@ void print_contact(ContactInfo *contact)
 Status search(AddressBook *address_book, const char *targetName, int targetNo, int data_type)
 {
 	int result = e_no_match;
-	int count = 0;
 	menu_header("Search Result:\n");
 	// print_search_header();
 	if (data_type == NAME){
-		for(;address_book->list < (address_book->list)+(address_book->count); address_book->list++){
+		for(int i = 0; i < address_book->count; i++){
 			printf("Address of pointer %d", address_book->list);
 			if (strcmp(address_book->list->name[0],targetName) == 0)
 			{
 				printf("Found");
-				// print_contact(address_book->list);
-				// print_search_separator();
 			}
 		}
 	}
