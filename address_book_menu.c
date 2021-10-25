@@ -86,11 +86,7 @@ void menu_header(const char *str)
 {
 /* 	fflush(stdout);
 
-<<<<<<< HEAD
 	system("cls"); */
-=======
-	system("clear");
->>>>>>> ce0990c77e4267ca2ad29bc07314ae4e0efc17bd
 
 	printf("#######  Address Book  #######\n");
 	if (*str != '\0')
@@ -208,16 +204,9 @@ Status add_contacts(AddressBook *address_book)
 	}
     printf("Insert successfully!\n");
 
-<<<<<<< HEAD
 	contact.si_no = count;	
 	address_book -> list[count] = contact; 
 	address_book->count++;
-=======
-	contact.si_no = count;
-	address_book -> list[count] = contact; 
-	address_book->count++;		
-
->>>>>>> ce0990c77e4267ca2ad29bc07314ae4e0efc17bd
  
     return e_success;
 }
