@@ -84,9 +84,9 @@ void search_menu(void)
 
 void menu_header(const char *str)
 {
-	fflush(stdout);
+/* 	fflush(stdout);
 
-	system("cls");
+	system("cls"); */
 
 	printf("#######  Address Book  #######\n");
 	if (*str != '\0')
@@ -119,6 +119,7 @@ Status menu(AddressBook *address_book)
 	do
 	{
 		main_menu();
+		printf("%d", address_book->count);
 
 		option = get_option(NUM, "");
 
@@ -190,10 +191,9 @@ Status add_contacts(AddressBook *address_book)
 	//}
     printf("Insert successfully!\n");
 
-	count++;					//increment count
-	contact.si_no = count;
-	address_book->count = count;		
+	contact.si_no = count;	
 	address_book -> list[count] = contact; 
+	address_book->count++;
  
     return e_success;
 }
