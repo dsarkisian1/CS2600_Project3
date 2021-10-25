@@ -86,7 +86,7 @@ void menu_header(const char *str)
 {
 	fflush(stdout);
 
-	system("clear");
+	system("cls");
 
 	printf("#######  Address Book  #######\n");
 	if (*str != '\0')
@@ -199,12 +199,12 @@ void print_search_separator()
 Status exit_search()
 {
 	char input;
-	do
+	while (input != 'q' || input != 'Q');
 	{
 		printf("Press: [q] | Cancel: ");
 		scanf("%c", &input);
 		printf("\n");
-	} while (input != 'q' || input != 'Q');
+	} 
 	return e_back;
 }
 
@@ -263,17 +263,19 @@ Status search(AddressBook *address_book, const char *targetName, int targetNo, i
 	int result = e_no_match;
 	int count = 0;
 	menu_header("Search Result:\n");
-	print_search_header();
+	// print_search_header();
 	if (data_type == NAME){
 		for(;address_book->list < (address_book->list)+(address_book->count); address_book->list++){
+			printf("Address of pointer %d", address_book->list);
 			if (strcmp(address_book->list->name[0],targetName) == 0)
 			{
-				print_contact(address_book->list);
-				print_search_separator();
+				printf("Found");
+				// print_contact(address_book->list);
+				// print_search_separator();
 			}
 		}
 	}
-	exit_search();
+	// exit_search();
 	
 	return result;
 }
