@@ -100,8 +100,8 @@ Status list_contacts(AddressBook *address_book, const char *title, int *index, c
 		        for(int i = 1; i < 5; i++)
 		        {
 		     		printf(":      :                                ");
-          			fmtString(address_book->list->phone_numbers[i]);
-          			fmtString(address_book->list->email_addresses[i]);
+          			fmtString(address_book->list[ind].phone_numbers[i]);
+          			fmtString(address_book->list[ind].email_addresses[i]);
           				if(i != 4)
             				printf(" :\n");
           				else
