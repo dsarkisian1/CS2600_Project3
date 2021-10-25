@@ -21,7 +21,7 @@ int get_option(int type, const char *msg)
 	switch(type)
 	{
 		case CHAR:
-			scanf("%c", &option);
+			//scanf("%c", &option);
 			break;
 		case NUM:
 			scanf("%d", &option); 
@@ -86,7 +86,7 @@ void menu_header(const char *str)
 {
 	fflush(stdout);
 
-	system("cls");
+	system("clear");
 
 	printf("#######  Address Book  #######\n");
 	if (*str != '\0')
@@ -176,24 +176,24 @@ Status add_contacts(AddressBook *address_book)
     printf("Start inserting data:\n");                   //Insert new data
     printf("Please enter your name:");
     scanf("%s", *contact.name);
-	//printf("Please enter amount of phone numbers: ");
-	//scanf("%d", &numberOfPhones);
-	//for(int i = 0; i < numberOfPhones; i++){
+	printf("Please enter amount of phone numbers: ");
+	scanf("%d", &numberOfPhones);
+	for(int i = 0; i < numberOfPhones; i++){
 		printf("Please enter the phone number: ");
-    	scanf("%s", *contact.phone_numbers);
-	//}
-    //printf("Please enter amount of email addresses: ");
-	//scanf("%d", &numberOfEmails);
-	//for(int i = 0; i < numberOfPhones; i++){
+    	scanf("%s", contact.phone_numbers[i]);
+	}
+    printf("Please enter amount of email addresses: ");
+	scanf("%d", &numberOfEmails);
+	for(int i = 0; i < numberOfEmails; i++){
 		printf("Please enter the address:");
-    	scanf("%s", *contact.email_addresses);
-	//}
+    	scanf("%s", contact.email_addresses[i]);
+	}
     printf("Insert successfully!\n");
 
-	count++;					//increment count
 	contact.si_no = count;
-	address_book->count = count;		
 	address_book -> list[count] = contact; 
+	address_book->count++;		
+
  
     return e_success;
 }
@@ -357,7 +357,35 @@ Status search_contact(AddressBook *address_book)
 
 Status edit_contact(AddressBook *address_book)
 {
-	/* Add the functionality for edit contacts here */
+	//search_contact(address_book);
+
+	int userChoice;
+
+	// printf("What would you like to edit?");
+	// printf("1: Name");
+	// printf("2: Phone Number");
+	// printf("3: Email Address");
+	// printf("4: Return");
+	// printf("Please input your choice: ");
+	// scanf("%d", userChoice);
+
+	// switch(userChoice)
+	// {
+	// 	//Back
+	// 	case 1:
+	// 		;
+	// 		break;
+	// 	case 2:
+	// 		;
+	// 		break;
+	// 	case 3:
+	// 		;
+	// 		break;
+	// 	case 4:
+	// 		return e_success;
+	// 		break;
+		//Name
+	
 	return e_fail;
 }
 
@@ -371,7 +399,7 @@ Status delete_contact(AddressBook *address_book)
 	do 
 	{
 		menu_header("Search Contact to Delete By:");
-		printf("Contact's Name: %s", address_book->list[0].name);
+		//printf("Contact's Name: %s", address_book->list[0].name);
 		printf("0. Back\n");
 		printf("1. Name\n");
 		printf("2. Phone No\n");
