@@ -178,15 +178,27 @@ Status add_contacts(AddressBook *address_book)
     scanf("%s", *contact.name);
 	printf("Please enter amount of phone numbers: ");
 	scanf("%d", &numberOfPhones);
-	for(int i = 0; i < numberOfPhones; i++){
-		printf("Please enter the phone number: ");
-    	scanf("%s", contact.phone_numbers[i]);
+	for(int i = 0; i < 5; i++){
+		if(i < numberOfPhones){
+			printf("Please enter the phone number: ");
+    		scanf("%s", contact.phone_numbers[i]);	
+		}
+		else{
+			contact.phone_numbers[i][0] = '0';
+		}
+		
 	}
     printf("Please enter amount of email addresses: ");
 	scanf("%d", &numberOfEmails);
-	for(int i = 0; i < numberOfEmails; i++){
-		printf("Please enter the address:");
-    	scanf("%s", contact.email_addresses[i]);
+	for(int i = 0; i < 5; i++){
+		if(i < numberOfEmails){
+			printf("Please enter the address:");
+    		scanf("%s", contact.email_addresses[i]);	
+		}
+		else{
+			contact.email_addresses[i][0] = '0';
+		}
+		
 	}
     printf("Insert successfully!\n");
 
@@ -361,13 +373,13 @@ Status edit_contact(AddressBook *address_book)
 
 	int userChoice;
 
-	// printf("What would you like to edit?");
-	// printf("1: Name");
-	// printf("2: Phone Number");
-	// printf("3: Email Address");
-	// printf("4: Return");
-	// printf("Please input your choice: ");
-	// scanf("%d", userChoice);
+	printf("What would you like to edit?");
+	printf("1: Name");
+	printf("2: Phone Number");
+	printf("3: Email Address");
+	printf("4: Return");
+	printf("Please input your choice: ");
+	//scanf("%d", userChoice);
 
 	// switch(userChoice)
 	// {
@@ -384,13 +396,13 @@ Status edit_contact(AddressBook *address_book)
 	// 	case 4:
 	// 		return e_success;
 	// 		break;
-		//Name
+	// }
+		
 	
 	return e_fail;
 }
 
-Status delete_contact(AddressBook *address_book)
-{
+Status delete_contact(AddressBook *address_book){
 	int option;
 	AddressBook *endPtr = address_book + address_book->count;
 	char name[NAME_LEN];
