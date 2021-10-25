@@ -343,7 +343,6 @@ Status search(AddressBook *address_book, const char *targetName, int targetNo, i
 			}
 		}
 	}
-	// exit_search();
 	
 	return result;
 }
