@@ -175,7 +175,7 @@ Status add_contacts(AddressBook *address_book)
 	int count = address_book->count;
 
     printf("Start inserting data:\n");                   //Insert new data
-    printf("Please enter your name:");
+    printf("Please enter your name: ");
     scanf("%s", *contact.name);
 	printf("Please enter amount of phone numbers: ");
 	scanf("%d", &numberOfPhones);
@@ -225,14 +225,17 @@ void print_search_separator()
 
 void exit_search()
 {
-	char input = 'x';
-	do
+	char input;
+	while(1)
 	{
 		printf("Press: [q] | Cancel: ");
-		scanf("%c", &input);
+		scanf(" %c", &input);
 		printf("\n");
-		printf("text %c",input);
-	} while (input != 'q' || input != 'Q');
+		if (input == 'q' || input == 'Q')
+		{
+			break;
+		}
+	} 
 }
 
 void print_contact(ContactInfo *contact)
