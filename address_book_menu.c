@@ -105,7 +105,7 @@ Status list_contacts(AddressBook *address_book, const char *title, int *index, c
     		    printf("\n==============================================================================================================");
     		    printf("\n: S.No : Name                            : Phone No                        : Email ID                        :");
     		    printf("\n==============================================================================================================\n");
-    		    fmtSiNo(address_book->list[ind].si_no + 1);
+    		    fmtSiNo(address_book->list[ind].si_no);
     		    fmtString(address_book->list[ind].name[0]);
     		    fmtString(address_book->list[ind].phone_numbers[0]);
     		    fmtString(address_book->list[ind].email_addresses[0]);
