@@ -218,8 +218,8 @@ Status menu(AddressBook *address_book)
 				delete_contact(address_book);
 				break;
 			case e_list_contacts:
-				break;
 				list_contacts(address_book, "List Contacts: ", 1, "Press:\n[q] | Cancel\n[n] | Next Page\n[p] | Previous Page", e_list);
+				break;
 			case e_save:
 				save_file(address_book);
 				break;
