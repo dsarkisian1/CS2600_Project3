@@ -78,74 +78,78 @@ Status list_contacts(AddressBook *address_book, const char *title, int *index, c
 	 * The menu provide navigation option if the entries increase the page size
 	 */ 
 	char inp = '\0';
-	int ind = *index;
-	int check = -1;
-	AddressBook base = address_book;
-	switch(mode)
-	{
-		case e_list:
-			while(inp != 'q')
-			{
-				check = 0;
-				inp = '\0';
-				menu_header(title);
-				printf("\n==============================================================================================================");
-				printf("\n: S.No : Name                            : Phone No                        : Email ID                        :");
-				printf("\n==============================================================================================================");
-				fmtSiNo(address_book->list->si_no);
-				fmtString(address_book->list->name[0]);
-				fmtString(address_book->list->phone_numbers[0]);
-				fmtString(address_book->list->email_addresses[0]);
-
-				printf(" :\n");
-				for(int i = 1; i < 5; i++)
-				{
-					printf(":      :                                ");
-					fmtString(address_book->list->phone_numbers[i]);
-					fmtString(address_book->list->email_addresses[i]);
-					if(i != 4)
-						printf(" :\n");
-					else
-						printf(" :");
-				}
-				printf("\n==============================================================================================================\n");
-				printf("%s", msg);
-				printf("\nEnter Input: ");
-
-				while(check != 1)
-				{
-					scanf("%c", &inp);
-					if(inp == 'n')
-					{	
-						address_book++;
+  	int ind = 1;
+  	int check = -1;
+  	switch(mode)
+  	{
+    	case e_list:
+      		while(inp != 'q')
+      		{
+	        	check = 0;
+    		    inp = '\0';
+    		    menu_header(title);
+    		    printf("\n==============================================================================================================");
+    		    printf("\n: S.No : Name                            : Phone No                        : Email ID                        :");
+    		    printf("\n==============================================================================================================\n");
+    		    fmtSiNo(address_book->list[ind].si_no);
+    		    fmtString(address_book->list[ind].name[0]);
+    		    fmtString(address_book->list[ind].phone_numbers[0]);
+    		    fmtString(address_book->list[ind].email_addresses[0]);
+ 
+        		printf(" :\n");
+		        for(int i = 1; i < 5; i++)
+		        {
+		     		printf(":      :                                ");
+          			fmtString(address_book->list->phone_numbers[i]);
+          			fmtString(address_book->list->email_addresses[i]);
+          				if(i != 4)
+            				printf(" :\n");
+          				else
+            				printf(" :");
+        		}
+    		    printf("\n==============================================================================================================\n");
+    		    printf("%s", msg);
+    		    printf("\nEnter Input: ");
+ 
+ 	 	        while(check != 1)
+        		{
+          			scanf("%c", &inp);
+          			if(inp == 'n' && ind <= address_book->count)
+          			{ 
+            			ind++;
+            			check = 1;
+         		 	}
+          			else if(inp == 'p' && ind > 0)
+          			{ 
+            			ind--;
+            			check = 1;
+          			}
+          			else if(inp == 'q')
+          			{
+            			ind = 1;
 						check = 1;
-					}
-					else if(inp == 'p')
-					{	
-						address_book--;
-						check = 1;
-					}
-					else if(inp == 'q')
-					{
-						check = 1;
-					}
-			
-					if ((inp == 'n' && address_book >= list[address_book->count]) || (inp == 'p' && address_book <= base))
-					{
-						printf("\nInvalid input. Out of bounds.\nEnter Input: ");
-						check = 0;
+          			}
+      
+      	    		if((inp == 'n' && ind > address_book->count) || (inp == 'p' && ind <= 0))
+          			{
+            			printf("\nInvalid input. Out of bounds.\nEnter Input: ");
+            			check = 0;
 
-						if(address_book >= &list[address_book->count])
-							address_book--;
-						else if(address_book <= base)
-							address_book++;
-					}
-				}
-			}
-
-		case 	
-	}	
-	return e_success;
+            			if(ind > address_book->count)
+              			{
+                			ind--;
+              			}
+            			else if(ind < 1)
+              			{
+                			ind++;
+              			}
+          			}
+        		}
+      		}
+			break;
+			 
+  } 
+  return e_success;
 }
 
 void menu_header(const char *str)
