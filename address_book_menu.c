@@ -80,9 +80,8 @@ Status list_contacts(AddressBook *address_book, const char *title, int *index, c
 	char inp = '\0';
   	int ind = 1;
   	int check = -1;
-  	switch(mode)
-  	{
-    	case e_list:
+	char* target = "\0";
+
       		while(inp != 'q')
       		{
 	        	check = 0;
@@ -91,21 +90,28 @@ Status list_contacts(AddressBook *address_book, const char *title, int *index, c
     		    printf("\n==============================================================================================================");
     		    printf("\n: S.No : Name                            : Phone No                        : Email ID                        :");
     		    printf("\n==============================================================================================================\n");
-    		    fmtSiNo(address_book->list[ind].si_no);
+    		    fmtSiNo(address_book->list[ind].si_no + 1);
     		    fmtString(address_book->list[ind].name[0]);
     		    fmtString(address_book->list[ind].phone_numbers[0]);
     		    fmtString(address_book->list[ind].email_addresses[0]);
  
         		printf(" :\n");
-		        for(int i = 1; i < 5; i++)
-		        {
-		     		printf(":      :                                ");
-          			fmtString(address_book->list[ind].phone_numbers[i]);
-          			fmtString(address_book->list[ind].email_addresses[i]);
-          				if(i != 4)
-            				printf(" :\n");
-          				else
-            				printf(" :");
+        		for(int id = 1; id < 5; id++)
+        		{
+          			printf(":      :                                ");
+					if(strcmp(address_book->list[ind].phone_numbers[id],target) != 0)
+          				fmtString(address_book->list[ind].phone_numbers[id]);
+					else
+						printf(" :                                ");
+					
+					if(strcmp(address_book->list[ind].email_addresses[id],target) != 0)
+        		 	 	fmtString(address_book->list[ind].email_addresses[id]);
+					else
+						printf(" :                                ");
+          			if(id != 4)
+            			printf(" :\n");
+          			else
+            			printf(" :");
         		}
     		    printf("\n==============================================================================================================\n");
     		    printf("%s", msg);
@@ -114,12 +120,12 @@ Status list_contacts(AddressBook *address_book, const char *title, int *index, c
  	 	        while(check != 1)
         		{
           			scanf("%c", &inp);
-          			if(inp == 'n' && ind <= address_book->count)
+          			if(inp == 'n')
           			{ 
             			ind++;
             			check = 1;
          		 	}
-          			else if(inp == 'p' && ind > 0)
+          			else if(inp == 'p')
           			{ 
             			ind--;
             			check = 1;
@@ -130,25 +136,23 @@ Status list_contacts(AddressBook *address_book, const char *title, int *index, c
 						check = 1;
           			}
       
-      	    		if((inp == 'n' && ind > address_book->count) || (inp == 'p' && ind <= 0))
+      	    		if((inp == 'n' && ind > address_book->count - 1) || (inp == 'p' && ind <= -1))
           			{
             			printf("\nInvalid input. Out of bounds.\nEnter Input: ");
             			check = 0;
 
-            			if(ind > address_book->count)
+            			if(ind > address_book->count - 1)
               			{
                 			ind--;
               			}
-            			else if(ind < 1)
+            			else if(ind <= -1)
               			{
                 			ind++;
               			}
           			}
         		}
       		}
-			break;
-			 
-  } 
+			  
   return e_success;
 }
 
