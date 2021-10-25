@@ -591,18 +591,21 @@ Status delete_contact(AddressBook *address_book){
 			case e_second_opt:
 				printf("Enter the Name: ");
 				scanf("%s", name);
-				search_and_delete(address_book, NAME, name, endPtr);
+				search_and_delete(address_book, NAME, name, -1);
 				break;
 			case e_third_opt:
 				printf("Enter the Phone No: ");
 				scanf("%s", phone_number);
+				search_and_delete(address_book, PHONE, phone_number, -1);
 				break;
 			case e_fourth_opt:
 				printf("Enter the email ID: ");
 				scanf("%s", email);
+				search_and_delete(address_book, EMAIL, email, -1);
 				break;
 			case e_fifth_opt:
 				get_option(NUM, "Enter the Serial No: ");
+				search_and_delete(address_book, SERIAL_NO, email, option);
 				break;
 			case e_exit:
 				break;
@@ -613,9 +616,10 @@ Status delete_contact(AddressBook *address_book){
 	/* Add the functionality for delete contacts here */
 }
 
-Status search_and_delete(AddressBook *address_book, DeleteType type, char *target, AddressBook *endPtr)
+Status search_and_delete(AddressBook *address_book, DeleteType type, char *target, int sno)
 {
-	int contacts[address_book->count];
+	int total_contacts = address_book->count;
+	int contacts[total_contacts];
 	int option;
 	int contacts_count = 0;
 	switch(type)
@@ -660,19 +664,51 @@ Status search_and_delete(AddressBook *address_book, DeleteType type, char *targe
 			}
 			search(address_book, target, 0, EMAIL);
 			break;
+		case SERIAL_NO:
+			for(int counter = 0; counter < address_book->count; counter++)
+			{
+				if(address_book->list[counter].si_no == sno)
+				{
+					contacts[0] = sno;
+					contacts_count++;
+				}
+			}
+			search(address_book, "\0", sno, SERIAL_NO);
+			break;
 		default:
 			break;
 	}
 
 	if(contacts_count > 0)
 	{
-		option = get_option(NUM, "Enter a Serial Number (S No.) to Delete: ");
+		int isValid = 0;
+		option = get_option(NUM, "\nEnter a Serial Number (S No.) to Delete: ");
+		while(isValid == 0)
+		{
+			for(int count = 0; count < contacts_count; count++)
+			{
+				if(contacts[count] == option)
+				{
+					isValid = 1;
+					printf("%d", isValid);
+					break;
+				} 
+			}
+			if(isValid == 0)
+			{
+				option = get_option(NUM, "S No. out of range of search. Enter a Serial Number (S No.) to Delete: ");
+			} else
+			{
+				break;
+			}
+		}
+
 		for(int count = 0; count < contacts_count; count++)
 		{
 			for(int counter = 0; counter < address_book->count; counter++)
 			{
 
-				if(option == address_book->list[counter].si_no)
+				if(option == address_book->list[counter].si_no && option == contacts[count])
 				{
 					ContactInfo temp = address_book->list[address_book->count - 1];
 					address_book->list[address_book->count - 1] = address_book->list[counter];
