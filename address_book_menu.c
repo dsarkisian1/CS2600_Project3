@@ -21,11 +21,7 @@ int get_option(int type, const char *msg)
 	switch(type)
 	{
 		case CHAR:
-<<<<<<< HEAD
 			scanf("%c", &option);
-=======
-			//scanf("%s", &option);
->>>>>>> 773e1d655e205361c6e16828c84e70f58c2877b5
 			break;
 		case NUM:
 			scanf("%d", &option); 
