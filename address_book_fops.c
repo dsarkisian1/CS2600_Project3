@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
+// #include <unistd.h>
 #include <sys/stat.h>
 #include <errno.h>
 #include <ctype.h>
@@ -11,6 +11,9 @@
 Status load_file(AddressBook *address_book)
 {
 	int ret;
+	address_book->count = 0;
+    address_book->list = malloc(sizeof(ContactInfo)*100);
+    return e_success;
 
 	/* 
 	 * Check for file existance
