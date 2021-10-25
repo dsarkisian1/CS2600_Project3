@@ -60,6 +60,31 @@ Status save_prompt(AddressBook *address_book)
 	return e_success;
 }
 
+void fmtSiNo(int num)
+{
+	printf(": %i",num);
+	int spcFill = 4;
+	int temp = num;
+	while(temp != 0)
+	{	
+		spcFill--;
+		temp /= 10;
+	}
+	for(int i = 0; i < spcFill; i++)
+		printf(" ");
+	
+}
+void fmtString(char* str)
+{
+	printf(" : %s", str);
+
+	int spcFill = 31 - strlen(str);
+	for(int i = 0; i < spcFill; i++)
+		printf(" ");
+	
+
+}
+
 Status list_contacts(AddressBook *address_book, const char *title, int *index, const char *msg, Modes mode)
 {
 	/* 
@@ -67,8 +92,83 @@ Status list_contacts(AddressBook *address_book, const char *title, int *index, c
 	 * Should be menu based
 	 * The menu provide navigation option if the entries increase the page size
 	 */ 
+	char inp = '\0';
+  	int ind = 1;
+  	int check = -1;
+	char* target = "\0";
 
-	return e_success;
+      		while(inp != 'q')
+      		{
+	        	check = 0;
+    		    inp = '\0';
+    		    menu_header(title);
+    		    printf("\n==============================================================================================================");
+    		    printf("\n: S.No : Name                            : Phone No                        : Email ID                        :");
+    		    printf("\n==============================================================================================================\n");
+    		    fmtSiNo(address_book->list[ind].si_no + 1);
+    		    fmtString(address_book->list[ind].name[0]);
+    		    fmtString(address_book->list[ind].phone_numbers[0]);
+    		    fmtString(address_book->list[ind].email_addresses[0]);
+ 
+        		printf(" :\n");
+        		for(int id = 1; id < 5; id++)
+        		{
+          			printf(":      :                                ");
+					if(strcmp(address_book->list[ind].phone_numbers[id],target) != 0)
+          				fmtString(address_book->list[ind].phone_numbers[id]);
+					else
+						printf(" :                                ");
+					
+					if(strcmp(address_book->list[ind].email_addresses[id],target) != 0)
+        		 	 	fmtString(address_book->list[ind].email_addresses[id]);
+					else
+						printf(" :                                ");
+          			if(id != 4)
+            			printf(" :\n");
+          			else
+            			printf(" :");
+        		}
+    		    printf("\n==============================================================================================================\n");
+    		    printf("%s", msg);
+    		    printf("\nEnter Input: ");
+ 
+ 	 	        while(check != 1)
+        		{
+          			scanf("%c", &inp);
+          			if(inp == 'n')
+          			{ 
+            			ind++;
+            			check = 1;
+         		 	}
+          			else if(inp == 'p')
+          			{ 
+            			ind--;
+            			check = 1;
+          			}
+          			else if(inp == 'q')
+          			{
+            			ind = 1;
+						check = 1;
+          			}
+      
+      	    		if((inp == 'n' && ind > address_book->count - 1) || (inp == 'p' && ind <= -1))
+          			{
+            			printf("\nInvalid input. Out of bounds.\nEnter Input: ");
+            			check = 0;
+
+            			if(ind > address_book->count - 1)
+              			{
+                			ind--;
+              			}
+            			else if(ind <= -1)
+              			{
+                			ind++;
+              			}
+          			}
+        		}
+      		}
+			  
+  return e_success;
 }
 
 void search_menu(void)
@@ -144,8 +244,8 @@ Status menu(AddressBook *address_book)
 				delete_contact(address_book);
 				break;
 			case e_list_contacts:
+				list_contacts(address_book, "List Contacts: ", 1, "Press:\n[q] | Cancel\n[n] | Next Page\n[p] | Previous Page", e_list);
 				break;
-				/* Add your implementation to call list_contacts function here */
 			case e_save:
 				save_file(address_book);
 				break;
