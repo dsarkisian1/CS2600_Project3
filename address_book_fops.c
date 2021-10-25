@@ -11,6 +11,9 @@
 Status load_file(AddressBook *address_book)
 {
 	int ret;
+	address_book->count = 0;
+    address_book->list = malloc(sizeof(ContactInfo)*100);
+    return e_success;
 
 	/* 
 	 * Check for file existance

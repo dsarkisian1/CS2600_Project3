@@ -167,19 +167,25 @@ Status add_contacts(AddressBook *address_book)
     }
 
 	ContactInfo contact;
-
+	int noPhone = 1;
+	int noEmail = 1;
+	int noOfContacts = address_book -> count;
     //int count = address_book->count;
     //++address_book->count;
     printf("Start inserting data:\n");                   //Insert new data
     printf("Please enter your name:");
-    scanf("%s", *contact.name);
+    scanf("%s", &contact.name[0]);
     printf("Please enter the phone number:");
-    scanf("%s", *contact.phone_numbers);
+    scanf("%s", &contact.phone_numbers[noPhone]);
+	noPhone++;
     printf("Please enter the address:");
-    scanf("%s", *contact.email_addresses);
+    scanf("%s", &contact.email_addresses[noEmail]);
+	noEmail++;
     printf("Insert successfully!\n");
 
+	address_book->count++;
 	contact.si_no = address_book->count + 1;
+	address_book->list[noOfContacts] = contact;
 
     return e_success;
 }
@@ -354,10 +360,10 @@ Status delete_contact(AddressBook *address_book)
 	char name[NAME_LEN];
 	char phone_number[NUMBER_LEN];
 	char email[EMAIL_ID_LEN];
-
 	do 
 	{
 		menu_header("Search Contact to Delete By:");
+		printf("Contact's Name: %s", address_book->list[0].name);
 		printf("0. Back\n");
 		printf("1. Name\n");
 		printf("2. Phone No\n");
