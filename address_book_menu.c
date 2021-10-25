@@ -265,10 +265,9 @@ Status search(AddressBook *address_book, const char *targetName, int targetNo, i
 	// print_search_header();
 	if (data_type == NAME){
 		for(int i = 0; i < address_book->count; i++){
-			printf("Address of pointer %d", address_book->list);
-			if (strcmp(address_book->list->name[0],targetName) == 0)
+			if (strcmp(address_book->list[i].name[0],targetName) == 0)
 			{
-				printf("Found");
+				printf("Found\n");
 			}
 		}
 	}
