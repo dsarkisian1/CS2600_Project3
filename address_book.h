@@ -72,7 +72,7 @@ typedef struct
 
 typedef enum
 {
-	NAME, 
+	NAME = 1,
 	PHONE, 
 	EMAIL,
 	SERIAL_NO

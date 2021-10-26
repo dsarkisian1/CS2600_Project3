@@ -32,7 +32,6 @@ Status load_file(AddressBook *address_book)
 
 		for(int counter = 0; counter < address_book->count; counter++)
 		{
-			printf("%d", counter);
 			fscanf(address_book->fp, "%d,%32[^,],%32[^,],%32[^,],%32[^,],%32[^,],%32[^,],%32[^,],%32[^,],%32[^,],%32[^,],%32[^,]",
 			&address_book->list[counter].si_no,
 			address_book->list[counter].name[0],

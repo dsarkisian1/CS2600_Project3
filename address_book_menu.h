@@ -16,8 +16,10 @@ Status save_prompt(AddressBook *address_book);
 Status add_contacts(AddressBook *address_book);
 Status search_contact(AddressBook *address_book);
 Status edit_contact(AddressBook *address_book);
+Status edit_contact_display(AddressBook *address_book, int index);
 Status delete_contact(AddressBook *address_book);
-Status search_and_delete(AddressBook *address_book, DeleteType type, char *target, int sno);
+Status search_and_change(AddressBook *address_book, Modes mode, DeleteType type, char *target, int sno);
+Status search_and_edit(AddressBook *address_book, DeleteType type, char *target, int sno);
 Status list_contacts(AddressBook *address_book, const char *title, int *index, const char *msg, Modes mode);
 
 #endif
