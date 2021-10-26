@@ -272,35 +272,94 @@ Status add_contacts(AddressBook *address_book)
 	int numberOfPhones = 0; 
 	int numberOfEmails = 0;
 
+	int userInput;
+
 	int count = address_book->count;
 
-    printf("Start inserting data:\n");                   //Insert new data
-    printf("Please enter your name: ");
-    scanf("%s", *contact.name);
-	printf("Please enter amount of phone numbers: ");
-	scanf("%d", &numberOfPhones);
-	for(int i = 0; i < 5; i++){
-		if(i < numberOfPhones){
-			printf("Please enter the phone number: ");
-    		scanf("%s", contact.phone_numbers[i]);	
+	int SHOWNAME = 0;     //flags to let menu know if it should display
+	int SHOWPHONE = 0;	  //the contact names and numbers
+	int SHOWEMAIL = 0;
+
+
+    //printf("Start inserting data:\n");                   //Insert new data
+    //printf("Please enter your name: ");
+    do{
+		
+		printf("####### Add Contact #######\n\n");
+		printf("0. Back: \n");
+		printf("1. Name: ");
+		if(SHOWNAME == 1){
+			printf("%s \n",  *contact.name);
 		}
 		else{
-			strcpy(contact.phone_numbers[i],"\0");
+			printf("\n");
 		}
-		
-	}
-    printf("Please enter amount of email addresses: ");
-	scanf("%d", &numberOfEmails);
-	for(int i = 0; i < 5; i++){
-		if(i < numberOfEmails){
-			printf("Please enter the address:");
-    		scanf("%s", contact.email_addresses[i]);	
+
+		printf("2. Phone: ");
+		if(SHOWPHONE == 1){
+			printf("\n");
+			for(int i = 0; i < numberOfPhones; i++){
+				printf("     %d: ", i);
+				printf("%s \n",  contact.phone_numbers[i]);
+			}
 		}
 		else{
-			strcpy(contact.email_addresses[i],"\0");
+			printf("\n");
+		}
+
+		printf("3. Email: ");
+		if(SHOWEMAIL == 1){
+			printf("\n");
+			for(int i = 0; i < numberOfEmails; i++){
+				printf("     %d: ", i);
+				printf("%s \n",  contact.email_addresses[i]);
+			}
+		}
+		else{
+			printf("\n");
+		}
+
+		scanf("%d", &userInput);
+
+		switch(userInput){
+		case 0:
+			break;
+		case 1:
+			SHOWNAME = 1;
+			printf("Please enter contact name: ");
+			scanf("%s", *contact.name);
+			break;
+		case 2:
+			SHOWPHONE = 1;
+			printf("Please enter amount of phone numbers: ");
+			scanf("%d", &numberOfPhones);
+			for(int i = 0; i < 5; i++){
+				if(i < numberOfPhones){
+					printf("Please enter the phone number: ");
+    				scanf("%s", contact.phone_numbers[i]);	
+				}
+				else{
+				strcpy(contact.phone_numbers[i],"\0");
+				}
+			}
+			break;
+		case 3: 
+			SHOWEMAIL = 1;
+		    printf("Please enter amount of email addresses: ");
+			scanf("%d", &numberOfEmails);
+			for(int i = 0; i < 5; i++){
+				if(i < numberOfEmails){
+					printf("Please enter the address:");
+    				scanf("%s", contact.email_addresses[i]);	
+				}
+			else{
+				strcpy(contact.email_addresses[i],"\0");
+				}
+			}
 		}
 		
-	}
+	}while(userInput != 0);
+
     printf("Insert successfully!\n");
 
 	contact.si_no = count;	
