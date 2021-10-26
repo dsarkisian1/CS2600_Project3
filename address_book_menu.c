@@ -21,7 +21,7 @@ int get_option(int type, const char *msg)
 	switch(type)
 	{
 		case CHAR:
-			//scanf("%c", &option);
+			scanf("%c", &option);
 			break;
 		case NUM:
 			scanf("%d", &option); 
@@ -186,7 +186,7 @@ void menu_header(const char *str)
 {
 	fflush(stdout);
 
-	system("clear");
+	system("cls");
 
 	printf("#######  Address Book  #######\n");
 	if (*str != '\0')
