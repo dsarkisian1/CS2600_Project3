@@ -67,7 +67,7 @@ Status save_file(AddressBook *address_book)
 	 * Re write the complete file currently
 	 */ 
 	address_book->fp = fopen(DEFAULT_FILE, "w");
-
+	char* target = "\0";
 	if (address_book->fp == NULL)
 	{
 		return e_fail;
@@ -80,9 +80,16 @@ Status save_file(AddressBook *address_book)
 		fprintf(address_book->fp, "%i,", ind);
 		fprintf(address_book->fp, "%s,", address_book->list[ind].name[0]);
 		for(int j = 0; j < 5; j++)
-			fprintf(address_book->fp, "%s,", address_book->list[ind].phone_numbers[j]);
+			if(strcmp(address_book->list[ind].phone_numbers[j],target) != 0)
+				fprintf(address_book->fp, "%s,", address_book->list[ind].phone_numbers[j]);
+			else if(strcmp(address_book->list[ind].phone_numbers[j],target) == 0)
+				fprintf(address_book->fp, " ,");
+				
 		for(int k = 0; k < 5; k++)
-			fprintf(address_book->fp, "%s,", address_book->list[ind].email_addresses[k]);
+			if(strcmp(address_book->list[ind].email_addresses[k],target) != 0)
+				fprintf(address_book->fp, "%s,", address_book->list[ind].email_addresses[k]);
+			else if(strcmp(address_book->list[ind].email_addresses[k],target) == 0)
+				fprintf(address_book->fp, " ,");
 		fprintf(address_book->fp, "\n");
 	}
 
