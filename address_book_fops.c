@@ -88,7 +88,6 @@ Status save_file(AddressBook *address_book)
 
 	fclose(address_book->fp);
 
-	load_file(address_book);
 	
 	return e_success;
 }
